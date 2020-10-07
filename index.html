@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Roller</title>
+    <link href="https://fonts.googleapis.com/css2?family=Niconne&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.20.0/dist/axios.min.js"></script>
+    <script src="index.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="query">
+
+        </div>
+        <div class="result">
+
+        </div>
+        <div class="total">
+
+        </div>
+        <form onsubmit="onSubmit(event)">
+            <input name="dicePattern" class="dice-field" type="text">
+            <input type="submit" value="Roll!">
+        </form>
+    </div>
+</body>
+</html>
