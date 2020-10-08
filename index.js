@@ -21,13 +21,18 @@ const parseRollString = async (string) => {
                 const result = await callQRNG(numberArray[0], numberArray[1]);
                 finalResult = [...finalResult, ...result];
             } else {
-                finalResult.push(parseInt(queryArray[i], 10))
+                finalResult.push(queryArray[i])
             }
         }
         return {
             queryString: queryArray,
             finalResult,
-            total: finalResult.reduce((prev, curr) => prev + curr, 0),
+            total: finalResult.reduce((prev, curr) => {
+                if (typeof curr === 'string') {
+                    return prev + parseInt(curr, 10)
+                }
+                return prev + curr
+            }, 0),
             }
     } else {
        throw Error('Not Supported')
@@ -56,20 +61,24 @@ const makeFinalResultElements = (queryArray, finalResult) => {
         'd20': 0,
         'd100': 0
     }
-
+    let totalNumbersTaken = 0
     queryArray.forEach((query, index) => {
+    
         if (query.includes('d')) {
             const splitQuery = query.split('d');
-            const diceArray = finalResult;
-            diceArray.forEach(item => {
-                if (parseInt(splitQuery[0], 10) > diceTracker[`d${splitQuery[1]}`]) {
+            const diceArray = finalResult; 
+
+            diceArray.forEach((item, index1) => {
+                if ( typeof item === 'number' && parseInt(splitQuery[0], 10) > diceTracker[`d${splitQuery[1]}`] && totalNumbersTaken === index1) {
                     diceElements.push(`<div class="d${splitQuery[1]}">${item}</div>`);
                     diceTracker[`d${splitQuery[1]}`] += 1;
-                    diceArray.shift()
+
+                    totalNumbersTaken++
                 }
             })
         } else {
             diceElements.push(`<div class="modifier">${query.includes('-') ? query : `+ ${query}` }</div>`);
+            totalNumbersTaken++
         }
     });
 
