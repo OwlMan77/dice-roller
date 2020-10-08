@@ -1,14 +1,14 @@
 
 const rollDie = (qNumber, sidesOfDie) => {
-    const rollResult = Math.floor(qNumber / (255 / sidesOfDie - 1));
-    return rollResult ? rollResult : 1;
+    const rollResult = Math.floor(qNumber / (255 / sidesOfDie));
+    return rollResult ? rollResult  : 1;
 }
 
 const callQRNG = async (numberOfRolls, sidesOfDie) => {
     const length = numberOfRolls > 1000 ? 1000 : numberOfRolls;
     return await axios.get(`https://qrng.anu.edu.au/API/jsonI.php?length=${length}&type=uint8`).then((response) => {
         return response.data.data.map((number) => rollDie(number, sidesOfDie));
-    }).catch(() => Math.floor(Math.random * (sidesOfDie + 1)));
+    }).catch(() => Math.floor(Math.random * (sidesOfDie)));
 }
 
 const parseRollString = async (string) => {
