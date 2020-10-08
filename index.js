@@ -1,7 +1,7 @@
 
 const rollDie = (qNumber, sidesOfDie) => {
     const rollResult = Math.floor(qNumber / (255 / sidesOfDie));
-    return rollResult ? rollResult  : 1;
+    return rollResult ? rollResult : 1;
 }
 
 const callQRNG = async (numberOfRolls, sidesOfDie) => {
@@ -53,6 +53,8 @@ const makeFinalResultElements = (queryArray, finalResult) => {
     const diceElements = [];
 
     const diceTracker = {
+        'd2': 0,
+        'd3': 0,
         'd4': 0,
         'd6': 0,
         'd8': 0,
@@ -70,7 +72,7 @@ const makeFinalResultElements = (queryArray, finalResult) => {
 
             diceArray.forEach((item, index1) => {
                 if ( typeof item === 'number' && parseInt(splitQuery[0], 10) > diceTracker[`d${splitQuery[1]}`] && totalNumbersTaken === index1) {
-                    diceElements.push(`<div class="d${splitQuery[1]}">${item}</div>`);
+                    diceElements.push(`<div class="d${splitQuery[1]} dice">${item}</div>`);
                     diceTracker[`d${splitQuery[1]}`] += 1;
 
                     totalNumbersTaken++
