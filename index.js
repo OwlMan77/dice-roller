@@ -1,6 +1,6 @@
 
 const rollDie = (qNumber, sidesOfDie) => {
-    const rollResult = Math.floor(qNumber / (255 / sidesOfDie));
+    const rollResult = Math.ceil(qNumber / (255 / sidesOfDie));
     return rollResult ? rollResult : 1;
 }
 
