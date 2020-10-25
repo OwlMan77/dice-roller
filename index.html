@@ -4,27 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dice Roller</title>
-    <link href="https://fonts.googleapis.com/css2?family=Niconne&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Niconne&family=Playfair+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link href="favicon.ico" rel="icon" type="image/x-icon" />
     <script src="https://cdn.jsdelivr.net/npm/axios@0.20.0/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.min.js"></script>
     <script src="index.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="query">
-
+    <div class="container connection-container">
+        <div class="message">
+            Type in your connection details!
         </div>
-        <div class="result">
-            Type in your dice roll!
-        </div>
-        <div class="total">
-
-        </div>
-        <form onsubmit="onSubmit(event)">
-            <input name="dicePattern" class="dice-field" type="text">
-            <input class="dice-button" type="submit" value="Roll!">
+        <img class="wifi" src="assets/wifi.png">
+        <form onsubmit="connect(event)">
+            <div class="inputs">
+                <div class="input-field">
+                    <label for="userName">Name:</label>
+                    <input name="userName" class="connect-field" type="text">
+                </div>
+                <div class="input-field">
+                    <label for="room">Room:</label>
+                    <input name="room" class="connect-field" type="text">
+                </div>
+            </div>
+            <input class="start dice-button" type="submit" value="Join">
         </form>
+    </div>
+    <div class="container app-container hidden">
+        <div class="dice-container">
+            <div class="query">
+
+            </div>
+            <div class="result">
+                Type in your dice roll!
+            </div>
+            <div class="total">
+    
+            </div>
+        </div>
+
+        <div class="chat-container">
+            <div class="chatbox">
+
+            </div>
+            <form onsubmit="onSubmit(event)">
+                <input name="dicePattern" class="dice-field" type="text">
+                <input class="dice-button" type="submit" value="Roll!">
+            </form>
+        </div>
     </div>
 </body>
 </html>

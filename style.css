@@ -9,14 +9,23 @@ html,body {
 .query,
 .total {
     font-size: 60px;
+    text-align: center;
+    margin: 30px 0;
 }
 
-.dice-field {
+.dice-field, .connect-field {
+    font-size: 30px;
+    text-align: center;
+}
+
+.chat-container .dice-field {
+    width: 80%;
     font-size: 30px;
     text-align: center;
 }
 
 .dice-button {
+    width: 18%;
     font-size: 30px;
     background-color: black;
     color: white;
@@ -25,7 +34,10 @@ html,body {
 .result {
     display: flex;
     flex-direction: row;
+    justify-content: center;
     font-size: 75px;
+    max-width: 100%;
+    overflow-x: auto;
 }
 
 .container {
@@ -34,6 +46,62 @@ html,body {
     justify-content: space-evenly;
     align-items: center;
     height: 100%;
+}
+
+.app-container {
+    flex-direction: row; 
+}
+
+.chat-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 45%;
+}
+
+.dice-container {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.chat-container > .chatbox {
+    min-height: 90vh;
+    background-color: rgba(0,0,0,0.18);
+    border: solid 1px rgba(0,0,0,0.5);
+}
+
+.connection-container > .message {
+    display: flex;
+    flex-direction: row;
+    font-size: 75px;
+}
+
+.connection-container > .wifi {
+    height: 200px;
+}
+
+.connection-container > form {
+    display: flex;
+    flex-direction: column;
+    align-items: space-evenly;
+}
+
+.connection-container > form > .start {
+    width: 100%;
+    margin: 20px 0;
+}
+
+.connection-container > form > .inputs {
+    font-size: 40px
+}
+
+.connection-container > form > .inputs > .input-field > label {
+    display: block; 
+    width: 100px;
 }
 
 .dice,
@@ -53,6 +121,64 @@ html,body {
     text-align: center;
     background-size: 100px;
 }
+
+.result > .dice {
+    min-width: 100px;
+}
+
+.chat-container > .chatbox {
+    font-family: 'Playfair Display', serif;
+    min-height: 90vh;
+    max-height: 90vh;
+    overflow-y: scroll;
+    background-color: rgba(0,0,0,0.18);
+    border: solid 1px rgba(0,0,0,0.5);
+}
+.chat-container > .chatbox > p > .dice {
+    font-family: 'Niconne', cursive;
+    font-size: 30px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    background-size: 30px;
+}
+
+.chat-container > .chatbox > p > .modifier {
+    font-size: 25px;
+    width: 50px;
+    height: 30px;
+    line-height: 25px;
+    font-weight: 700;
+    background-size: 30px;
+}
+
+.chat-container > .chatbox > .chat-dice {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 100%;
+    align-items: center;
+}
+
+.chat-container > .chatbox > .chat-message {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 100%;
+    align-items: center;
+}
+
+.chat-container > .chatbox .announcement {
+    font-weight: 700 !important;
+    justify-content: center !important;
+}
+
+.chat-container > .chatbox .username {
+    margin: 0 20px;
+    font-weight: 600;
+}
+
+
 
 .modifier {
     color: black;
@@ -85,4 +211,8 @@ html,body {
 
 .d20 {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' viewBox='0 0 1000 1000' enable-background='new 0 0 1000 1000' xml:space='preserve'%3E%3Cmetadata%3E Svg Vector Icons : http://www.onlinewebfonts.com/icon %3C/metadata%3E%3Cg%3E%3Cpath d='M881.4,209.6L560.8,24.5c-33.4-19.3-88.1-19.3-121.5,0L118.6,209.6c-33.4,19.3-60.8,66.6-60.8,105.2v370.3c0,38.6,27.3,85.9,60.8,105.2l320.7,185.2c33.4,19.3,88.1,19.3,121.5,0l320.7-185.2c33.4-19.3,60.8-66.6,60.8-105.2V314.8C942.2,276.3,914.9,228.9,881.4,209.6z'/%3E%3C/g%3E%3C/svg%3E") !important;
+}
+
+.hidden {
+    display: none;
 }

@@ -1,3 +1,65 @@
+const socket = io('http://localhost:3000').connect();
+let room;
+let username;
+
+
+socket.on('dice-result', function(result){
+    const node = document.createElement("p"); 
+    const textnode = document.createTextNode(`${result.username}:`);
+    const usernameNode = document.createElement("p"); 
+    usernameNode.append(textnode);
+    usernameNode.classList.add('username');              
+    node.classList.add('chat-dice');
+    node.innerHTML = makeFinalResultElements(result.query, result.result);
+    node.prepend(usernameNode);
+    document.getElementsByClassName('chatbox')[0].appendChild(node)
+});
+
+socket.on('user-message', function(messageData){
+    console.log(messageData);
+    const node = document.createElement("p");
+    if (messageData.username) {
+        const textnode = document.createTextNode(`${messageData.username}:`);
+        const usernameNode = document.createElement("p"); 
+        usernameNode.append(textnode);
+        usernameNode.classList.add('username'); 
+        node.prepend(usernameNode);
+    } else {
+        node.classList.add('announcement'); 
+    }
+
+
+    node.classList.add('chat-message');
+    const textnode = document.createTextNode(messageData.message);
+    node.appendChild(textnode);
+
+    document.getElementsByClassName('chatbox')[0].appendChild(node)
+});
+
+socket.on('disconnect', function() {
+    room = undefined;
+    username = undefined;
+    document.getElementsByClassName('connection-container')[0].classList.remove('hidden');
+    document.getElementsByClassName('app-container')[0].classList.add('hidden');
+})
+
+const connect = (event) => {
+
+    event.preventDefault();
+    
+    username = document.getElementsByClassName('connect-field')[0].value;
+    room = document.getElementsByClassName('connect-field')[1].value;
+    
+    const roomData = {
+        username,
+        id: room
+    };
+
+    socket.emit('join', roomData);
+
+    document.getElementsByClassName('connection-container')[0].classList.add('hidden');
+    document.getElementsByClassName('app-container')[0].classList.remove('hidden');
+}
 
 const rollDie = (qNumber, sidesOfDie) => {
     const rollResult = Math.ceil(qNumber / (255 / sidesOfDie));
@@ -41,12 +103,20 @@ const parseRollString = async (string) => {
 
 const onSubmit = async (event) => {
     event.preventDefault()
-
     const input = document.getElementsByClassName('dice-field')[0].value;
-    const resultObject = await parseRollString(input)
 
-    updateFields(resultObject)
+    if (input && /(\d*)(D\d*)((?:[+*-](?:\d+|\([A-Z]*\)))*)(?:\+(D\d*))?/i.test(input)) {
+        try {
+        const resultObject = await parseRollString(input)
+        updateFields(resultObject)
+        } catch (_err) {
+            socket.emit('user-message', {message: input, room: {username, room}}) 
+        }
 
+
+    } else {
+        socket.emit('user-message', {message: input, room: {username, room}})
+    }
 }
 
 const makeFinalResultElements = (queryArray, finalResult) => {
@@ -97,4 +167,17 @@ const updateFields = (resultObject) => {
     queryContainer.innerHTML = filteredQuery
     resultContainer.innerHTML = makeFinalResultElements(queryString, finalResult)
     totalContainer.innerHTML = `Total: ${total}`
+
+    socket.emit('dice-roll', {
+        room: {
+            id: room,
+            username
+        },
+        roll: {
+            query: queryString,
+            result: finalResult,
+            total
+        }
+    })
 }
+
